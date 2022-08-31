@@ -1,0 +1,12 @@
+<svg id="Component_1_8" data-name="Component 1 – 8" xmlns="http://www.w3.org/2000/svg" width="21.769" height="21.811" viewBox="0 0 21.769 21.811">
+  <rect id="Rectangle_152" data-name="Rectangle 152" width="21.758" height="3.497" transform="translate(0 10.262)" fill="#ffd400"/>
+  <rect id="Rectangle_153" data-name="Rectangle 153" width="21.758" height="7.015" transform="translate(0 14.796)" fill="#3a9e52"/>
+  <g id="Group_449" data-name="Group 449" transform="translate(0 -1.763)">
+    <g id="Group_487" data-name="Group 487">
+      <path id="Path_9513" data-name="Path 9513" d="M5.755,15.861H1.191a1.166,1.166,0,0,1,0-2.331H5.755a1.166,1.166,0,1,1,0,2.331" transform="translate(-0.009 -4.871)" fill="#d9000d"/>
+      <path id="Path_9514" data-name="Path 9514" d="M17.359,15.862H12.8a1.166,1.166,0,1,1,0-2.331h4.563a1.166,1.166,0,1,1,0,2.331" transform="translate(-4.187 -4.872)" fill="#d9000d"/>
+      <path id="Path_9515" data-name="Path 9515" d="M28.971,15.862H24.407a1.166,1.166,0,0,1,0-2.331h4.564a1.166,1.166,0,1,1,0,2.331" transform="translate(-8.368 -4.872)" fill="#d9000d"/>
+      <path id="Path_9516" data-name="Path 9516" d="M19.946,6.814H1.812V4.566H19.946Zm1.812-4.06H0V8.626H21.758Z" transform="translate(0 -0.991)" fill="#005aa7"/>
+    </g>
+  </g>
+</svg>

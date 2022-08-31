@@ -1,0 +1,20 @@
+# this is a multistage docker build: first creating a 
+# build folder to serve in production and then starting nginx
+
+FROM node:lts-alpine as build-stage
+WORKDIR /app
+
+# Keep package.json on top for optimization
+COPY package.json .
+COPY yarn.lock .
+RUN yarn
+
+COPY . .
+
+RUN yarn build
+
+#production stage
+FROM nginx:stable-alpine as production-stage
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-stage /app/build /usr/share/nginx/html
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,0 +1,61 @@
+# Template docker-push
+
+# This template allows you to build and push your docker image to a Docker Hub account.
+# The workflow allows running tests, code linting and security scans on feature branches (as well as master).
+# The docker image will be validated and pushed to the docker registry after the code is merged to master.
+
+# Prerequisites: $DOCKERHUB_USERNAME, $DOCKERHUB_PASSWORD setup as deployment variables
+
+image: atlassian/default-image:3
+options:
+  docker: true
+  size: 2x
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: Build and Test
+            script:
+              - IMAGE_NAME="logxgroup/logx.frontend.b2b"
+              - docker build . --file Dockerfile.prod --tag ${IMAGE_NAME}
+            services:
+              - docker
+            caches:
+              - docker
+        - step:
+            name: Lint the Dockerfile
+            image: hadolint/hadolint:latest-debian
+            script:
+              - hadolint Dockerfile.prod
+  branches:
+    master:
+      - step:
+          name: Build and Test
+          script:
+            - IMAGE_NAME=$BITBUCKET_REPO_SLUG
+            - docker build . --file Dockerfile.prod --tag ${IMAGE_NAME}
+            - echo ${DOCKERHUB_PASSWORD} | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+            - VERSION="latest"
+            - IMAGE=${DOCKERHUB_NAMESPACE}/${IMAGE_NAME}
+            - docker tag "${IMAGE_NAME}" "${IMAGE}:${VERSION}"
+            - docker push "${IMAGE}:${VERSION}"
+          services:
+            - docker
+          caches:
+            - docker
+          artifacts:
+            - '*.tar'
+      - step:
+          name: Deploy to production
+          deployment: TestProduction
+          script:
+            - echo "Deploying to production environment"
+            - pipe: atlassian/ssh-run:0.2.2
+              variables:
+                SSH_USER: 'ubuntu'
+                SERVER: 'ec2-18-219-59-86.us-east-2.compute.amazonaws.com'
+                COMMAND: 'sudo /home/depoly/deploy-b2b.sh'
+definitions:
+  services:
+    docker:
+      memory: 4096

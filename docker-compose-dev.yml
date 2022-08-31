@@ -1,0 +1,17 @@
+# services === container --> all your container will do under
+# services
+version: '3.8'
+services:
+  logxfrontendbtob:
+    # stdin_open: true
+    # tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/app
+    env_file:
+      - ./.env
